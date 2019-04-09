@@ -90,7 +90,7 @@ Retorno:
 
 ```php
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'http://estudantesc.sc.gov.br/ws/{{ API_CALL }}');
+curl_setopt($ch, CURLOPT_URL, 'http://estudantesc.sc.gov.br/ws/{ API_CALL }');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $data = curl_exec($ch);
 curl_close($ch); 
@@ -102,7 +102,7 @@ $result = json_decode($data, true);
 
 ```javascript
 var xhttp = new XMLHttpRequest();
-xhttp.open("GET","https://estudantesc.sc.gov.br/ws/{{ API_CALL }}", true);
+xhttp.open("GET","https://estudantesc.sc.gov.br/ws/{ API_CALL }", true);
 xhttp.send();
 var rt = xhttp.responseText;
 ```
