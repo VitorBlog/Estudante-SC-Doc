@@ -81,6 +81,8 @@ Retorno:
 ```javascript
 [{"DisciplinaNom":"BIL - BIOLOGIA","QtdFaltas":0},{"DisciplinaNom":"MAT - MATEMÁTICA","QtdFaltas":2},{"DisciplinaNom":"GEO - GEOGRAFIA","QtdFaltas":0},{"DisciplinaNom":"HIS - HISTÓRIA","QtdFaltas":0},{"DisciplinaNom":"EFI - EDUCAÇÃO FÍSICA","QtdFaltas":1},{"DisciplinaNom":"LEI - LÍNGUA ESTRANGEIRA - INGLÊS","QtdFaltas":2},{"DisciplinaNom":"LPL - LÍNGUA PORTUGUESA E LITERATURA","QtdFaltas":1},{"DisciplinaNom":"SOC - SOCIOLOGIA","QtdFaltas":1},{"DisciplinaNom":"FIS - FÍSICA","QtdFaltas":0},{"DisciplinaNom":"QUI - QUÍMICA","QtdFaltas":2},{"DisciplinaNom":"FIL - FILOSOFIA","QtdFaltas":0},{"DisciplinaNom":"ATE - ARTE","QtdFaltas":2}]
 ```
+<br>
+<br>
 
 # Exemplo com PHP e cURL
 
@@ -96,7 +98,7 @@ $result = json_decode($data, true);
 
 # Exemplo com JAVASCRIPT e XMLHttpRequest
 
-```php
+```javascript
 var xhttp = new XMLHttpRequest();
 xhttp.open("GET","https://estudantesc.sc.gov.br/ws/{{ API_CALL }}", true);
 xhttp.send();
