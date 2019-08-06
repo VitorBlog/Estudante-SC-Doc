@@ -3,29 +3,29 @@
 ### Point
 
 <code>
-http://estudantesc.sc.gov.br/ws/
+http://webservices.sed.sc.gov.br/eol2/rest/
 </code>
 
 ### Pegar dados do aluno
 
-Dados necessários: Matricula, Data de nascimento;
+Dados necessários: Matricula;
 ```php
-http://estudantesc.sc.gov.br/ws/get_dados_aluno.php?matricula=MATRICULA&datanas=DATA DE NASCIMENTO
+http://webservices.sed.sc.gov.br/eol2/rest/wsConsultaEscolaAluno
 // Exemplo:
-http://estudantesc.sc.gov.br/ws/get_dados_aluno.php?matricula=237590466&datanas=12042000
+curl -XPOST -H "Content-type: application/json" -d '{"AlunoCod": 237590466}' 'http://webservices.sed.sc.gov.br/eol2/rest/wsConsultaEscolaAluno'
 ```
 
 Retorno:
 
 ```javascript
-[{"AlunoNom":"NOME COMPLETO","UeCod":CÓDIGO,"UeNom":"ESCOLA","UeEnd":"RUA","UeNumEnd":NUMERO,"UeMunNom":"CIDADE"}]
+{"ResultadoAluno":"[{\"AlunoNom\":\"Nome completo\",\"AlunoDataNasc\":\"Data de nascimento\",\"AlunoCod\":Matricula,\"UeCod\":Código da escola,\"UeNom\":\"Nome da escola\",\"UeEnd\":\"Rua da escola\",\"UeNumEnd\":Numero de endereço,\"UeMunNom\":\"Município\",\"UeLatitude\":\"Latitude\",\"UeLongitude\":\"Longitude\"}]"}
 ```
 
 ### Pegar boletim do aluno
 
 Dados necessários: Matricula;
 ```php
-http://estudantesc.sc.gov.br/ws/get_boletim_geral.php?matricula=MATRICULA
+http://webservices.sed.sc.gov.br/eol2/rest/wsConsultaBoletim
 // Exemplo:
 http://estudantesc.sc.gov.br/ws/get_boletim_geral.php?matricula=237590466
 ```
@@ -33,15 +33,15 @@ http://estudantesc.sc.gov.br/ws/get_boletim_geral.php?matricula=237590466
 Retorno:
 
 ```javascript
-[{"DisciplinaNome":"BIOLOGIA","Nota1":0,"Falta1":0,"Nota2":0,"Falta2":0,"Nota3":0,"Falta3":0,"Nota4":0,"Falta4":0,"NotaExame":0,"NotaRecuperacao":0,"NotaFinal":0}]
-//OPS: sai uma linha dessa para cada materia
+{"ResultadoBoletim":"[{\"Turma\":\"Turma\",\"AlunoCod\":Matricula,\"AlunoDataNasc\":\"Data de nascimento\",\"AlunoCEJA\":\"n\",\"NotaFaltaDisciplina\":[{{\"DisciplinaNome\":\"LÍNGUA ESTRANGEIRA - INGLÊS\",\"DisciplinaCodigo\":319,\"Nota1\":10.0000,\"Falta1\":2,\"Nota2\":0,\"Falta2\":0,\"Nota3\":0,\"Falta3\":0,\"Nota4\":0,\"Falta4\":0,\"NotaExame\":0,\"NotaRecuperacao\":0,\"NotaFinal\":0,\"Liberado1\":\"s\",\"Liberado2\":\"n\",\"Liberado3\":\"n\",\"Liberado4\":\"n\",\"LiberadoExame\":\"n\",\"LiberadoRec\":\"n\"}]}]"}
+//OBS: sai uma linha dessa para cada materia
 ```
 
 ### Pegar grade do aluno
 
 Dados necessários: Matricula;
 ```php
-http://estudantesc.sc.gov.br/ws/get_grade_aluno.php?matricula=MATRICULA
+http://webservices.sed.sc.gov.br/eol2/rest/wsConsultaGradeAluno'
 // Exemplo:
 http://estudantesc.sc.gov.br/ws/get_grade_aluno.php?matricula=237590466
 ```
@@ -49,14 +49,15 @@ http://estudantesc.sc.gov.br/ws/get_grade_aluno.php?matricula=237590466
 Retorno:
 
 ```javascript
-[{"Cd":"255","Nm":"BIL - BIOLOGIA"},{"Cd":"301","Nm":"MAT - MATEMÁTICA"},{"Cd":"302","Nm":"GEO - GEOGRAFIA"},{"Cd":"304","Nm":"HIS - HISTÓRIA"},{"Cd":"307","Nm":"EFI - EDUCAÇÃO FÍSICA"},{"Cd":"319","Nm":"LEI - LÍNGUA ESTRANGEIRA - INGLÊS"},{"Cd":"401","Nm":"LPL - LÍNGUA PORTUGUESA E LITERATURA"},{"Cd":"437","Nm":"SOC - SOCIOLOGIA"},{"Cd":"475","Nm":"FIS - FÍSICA"},{"Cd":"513","Nm":"QUI - QUÍMICA"},{"Cd":"536","Nm":"FIL - FILOSOFIA"},{"Cd":"628","Nm":"ATE - ARTE"}]
+{"ResultadoAluno":"[{\"Turma\":\"Turma\",\"AlunoCod\":Matricula,\"dsiciplinas\":[{\"Cd\":\"255\",\"Nm\":\"BIOLOGIA                                \"},{\"Cd\":\"301\",\"Nm\":\"MATEMÁTICA                              \"},{\"Cd\":\"302\",\"Nm\":\"GEOGRAFIA                               \"},{\"Cd\":\"304\",\"Nm\":\"HISTÓRIA                                \"},{\"Cd\":\"307\",\"Nm\":\"EDUCAÇÃO FÍSICA                         \"},{\"Cd\":\"319\",\"Nm\":\"LÍNGUA ESTRANGEIRA - INGLÊS             \"},{\"Cd\":\"401\",\"Nm\":\"LÍNGUA PORTUGUESA E LITERATURA          \"},{\"Cd\":\"437\",\"Nm\":\"SOCIOLOGIA                              \"},{\"Cd\":\"475\",\"Nm\":\"FÍSICA                                  \"},{\"Cd\":\"513\",\"Nm\":\"QUÍMICA                                 \"},{\"Cd\":\"536\",\"Nm\":\"FILOSOFIA                               \"},{\"Cd\":\"628\",\"Nm\":\"ARTE                                    \"}]}]"}
+//Santa Catarina representando como sempre. "dsiciplinas"
 ```
 
 ### Pegar a nota do aluno
 
-Dados necessários: Matricula, Código da materia (Retornado na Grade);
+Dados necessários: Matricula, Código da materia (Retornado na Grade), Código da turma (Retornado na Grade e no Boletim);
 ```php
-http://estudantesc.sc.gov.br/ws/get_notas.php?matricula=MATRICULA&disc=CÓDIGO
+http://webservices.sed.sc.gov.br/eol2/rest/wsConsultaNotasDisci
 // Exemplo:
 http://estudantesc.sc.gov.br/ws/get_notas.php?matricula=237590466&disc=319
 ```
@@ -64,7 +65,7 @@ http://estudantesc.sc.gov.br/ws/get_notas.php?matricula=237590466&disc=319
 Retorno:
 
 ```javascript
-{"DisciplinaNom":"LÍNGUA ESTRANGEIRA - INGLÊS","NotaWS":[{"AtividadesBimestre":1,"AtividadesCod":101,"AtividadesDescricao":"TB1","AtividadesData":"2019-03-15T00:00:00","TiposAtividadeDescricao":"Trabalho","AtividadeNota":9.5000}]}
+{"ResultadoNotas":"{\"DisciplinaNom\":\"LÍNGUA ESTRANGEIRA - INGLÊS\",\"AlunoCod\":Matricula,\"DtNascimento\":\"Data de nascimento\",\"UeNom\":\"Escola",\"NotasTurma\":\"Turma\",\"AlunoSemNota\":false,\"NotaWS\":[{\"AtividadesBimestre\":1,\"AtividadesCod\":104,\"AtividadesDescricao\":\"IT1\",\"AtividadesData\":\"2019-05-10\",\"TiposAtividadeDescricao\":\"Interpretação de texto\",\"AtividadeNota\":10.0000,\"AtividadeMediaTurma\":9.5200}]}"}
 ```
 
 ### Pegar faltas do aluno
